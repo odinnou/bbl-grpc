@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  sqldata:
+    image: postgres
+
+  server:
+    image: server:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Server/Dockerfile
+    depends_on:
+      - sqldata
