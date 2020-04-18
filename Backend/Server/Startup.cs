@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Configuration;
+using Server.Grpc;
 using Server.Infrastructure.Migrations;
 using System.Reflection;
 
@@ -38,7 +39,7 @@ namespace Server
 
             app.UseEndpoints(endpoints =>
             {
-              //  endpoints.MapGrpcService<ChatService>();
+                endpoints.MapGrpcService<ChatService>();
             });
         }
     }

@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Infrastructure;
 using Server.Repositories;
-using Server.Repositories.Interfaces;
+using Server.UseCases;
+using Server.UseCases.Interfaces;
 
 namespace Server.Configuration
 {
@@ -12,6 +13,11 @@ namespace Server.Configuration
         {
             #region Database
             services.AddDbContext<ChatContext>(options => options.UseLazyLoadingProxies().UseNpgsql("Host=sqldata;Database=chat;User Id=postgres;Password=docker;").UseSnakeCaseNamingConvention());
+            #endregion
+
+            #region Repositories
+            services.AddTransient<IMessageBroadcaster, MessageBroadcaster>();
+            services.AddTransient<IChatRoomManager, ChatRoomManager>();
             #endregion
 
             #region Repositories

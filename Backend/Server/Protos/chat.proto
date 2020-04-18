@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 package Server;
 
 message GetMessagesRequest {
-    google.protobuf.Timestamp date_since = 1;
+    int32 lastMessages = 1;
 }
 
 message PostMessageRequest {

@@ -8,16 +8,9 @@ services:
         - POSTGRES_PASSWORD=docker
     ports:
       - "5432:5432"
-    volumes:
-      - grpc-sqldata:/var/lib/postgresql/data
 
   server:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "65003:80"
-      - "66003:81"
-
-volumes:
-  grpc-sqldata:
-    external: true
+      - "47001:81"
