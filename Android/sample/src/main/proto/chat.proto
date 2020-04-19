@@ -1,0 +1,32 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+/* >>
+import "google/api/annotations.proto";
+<< */
+
+package Server;
+
+message GetMessagesRequest {
+    int32 lastMessages = 1;
+}
+
+message PostMessageRequest {
+	string login = 1;
+	string message = 2;
+}
+
+message MessageResponse {
+	string login = 1;
+    string message = 2;
+    google.protobuf.Timestamp date_created = 3;
+}
+
+message GetMessagesResponse{
+	repeated MessageResponse messages = 1;
+}
+
+service Chat {
+  rpc GetHistory (GetMessagesRequest) returns (GetMessagesResponse) {}
+  rpc Participate (stream PostMessageRequest) returns (stream MessageResponse) {}  
+}

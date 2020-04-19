@@ -50,7 +50,10 @@ namespace Server.Grpc
                 {
                     ChatEntry chatEntry = iMapper.Map<ChatEntry>(requestStream.Current);
 
-                    await SendMessage(chatEntry);
+                    if (!string.IsNullOrWhiteSpace(chatEntry.Message))
+                    {
+                        await SendMessage(chatEntry);
+                    }
                 }
             }
             catch
