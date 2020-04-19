@@ -29,4 +29,10 @@ namespace Server.Models
             Participants.Remove(participantRoRemove);
         }
     }
+
+    public enum ChatRoomActivity
+    {
+        Join,
+        Leave
+    }
 }

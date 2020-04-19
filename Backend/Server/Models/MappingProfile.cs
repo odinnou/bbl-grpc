@@ -19,7 +19,12 @@ namespace Server.Models
             .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => DateTime.UtcNow));
 
             CreateMap<ChatEntry, MessageResponse>()
-            .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(src.DateCreated)));
+            .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(DateTime.SpecifyKind(src.DateCreated, DateTimeKind.Utc))));
+
+            CreateMap<(Participant Participant, ChatRoomActivity Activity), MessageResponse>()
+            .ForMember(dest => dest.Message, opt => opt.MapFrom(src => $"{src.Participant.Login} - {src.Activity}"))
+            .ForMember(dest => dest.Login, opt => opt.MapFrom(src => "System"))
+            .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc))));
 
             CreateMap<IEnumerable<ChatEntry>, GetMessagesResponse>()
             .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src));

@@ -2,11 +2,8 @@
 using Grpc.Core;
 using Server.Models;
 using Server.Repositories;
-using Server.UseCases;
 using Server.UseCases.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Server.Grpc
@@ -32,8 +29,7 @@ namespace Server.Grpc
 
             context.Status = new Status(StatusCode.OK, $"Last {request.LastMessages} chat entries...");
 
-            var lol = iMapper.Map<GetMessagesResponse>(entries);
-            return lol;
+            return iMapper.Map<GetMessagesResponse>(entries);
         }
 
         public override async Task Participate(IAsyncStreamReader<PostMessageRequest> requestStream, IServerStreamWriter<MessageResponse> responseStream, ServerCallContext context)
@@ -46,7 +42,7 @@ namespace Server.Grpc
             string connectionId = context.GetHttpContext().Connection.Id;
             Participant participant = iMapper.Map<Participant>((requestStream.Current, connectionId, responseStream));
 
-            iChatRoomManager.AddParticipantToTheRoom(participant);
+            await Connect(participant);
 
             try
             {
@@ -54,14 +50,31 @@ namespace Server.Grpc
                 {
                     ChatEntry chatEntry = iMapper.Map<ChatEntry>(requestStream.Current);
 
-                    await iChatEntryRepository.AddEntry(chatEntry);
-                    await iMessageBroadcaster.Execute(chatEntry);
+                    await SendMessage(chatEntry);
                 }
             }
-            catch (Exception)
+            catch
             {
-                iChatRoomManager.RemoveParticipantFromTheRoom(participant);
+                await Disconnect(participant);
             }
+        }
+
+        private async Task Connect(Participant participant)
+        {
+            iChatRoomManager.AddParticipantToTheRoom(participant);
+            await iMessageBroadcaster.BroadcastChatRoomActivity(participant, ChatRoomActivity.Join);
+        }
+
+        private async Task Disconnect(Participant participant)
+        {
+            iChatRoomManager.RemoveParticipantFromTheRoom(participant);
+            await iMessageBroadcaster.BroadcastChatRoomActivity(participant, ChatRoomActivity.Leave);
+        }
+
+        private async Task SendMessage(ChatEntry chatEntry)
+        {
+            await iChatEntryRepository.AddEntry(chatEntry);
+            await iMessageBroadcaster.BroadcastMessage(chatEntry);
         }
     }
 }

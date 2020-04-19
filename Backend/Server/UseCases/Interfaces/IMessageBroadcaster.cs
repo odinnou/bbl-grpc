@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 
 namespace Server.UseCases.Interfaces
 {
-    public  interface IMessageBroadcaster
+    public interface IMessageBroadcaster
     {
-        Task Execute(ChatEntry chatEntry);
+        Task BroadcastMessage(ChatEntry chatEntry);
+
+        Task BroadcastChatRoomActivity(Participant participant, ChatRoomActivity chatRoomActivity);
     }
 }
