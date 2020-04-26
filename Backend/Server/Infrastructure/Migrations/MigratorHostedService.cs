@@ -39,7 +39,7 @@ namespace Server.Infrastructure.Migrations
 
         private IEnumerable<ChatEntry> BuildRandomChatEntries()
         {
-            var logins = new[] { "Odinnou", "Cgt", "Tazacban", "Dashell", "Cwep", "16ar" };
+            string[] logins = new[] { "Odinnou", "Cgt", "Tazacban", "Dashell", "Cwep", "16ar" };
 
             Faker<ChatEntry> faker = new Faker<ChatEntry>()
                             .RuleFor(entry => entry.DateCreated, fake => fake.Date.Past())

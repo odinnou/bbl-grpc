@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.stfalcon.chatkit.sample.R;
 import com.stfalcon.chatkit.sample.features.demo.custom.holder.CustomHolderDialogsActivity;
 import com.stfalcon.chatkit.sample.features.demo.custom.layout.CustomLayoutDialogsActivity;
-import com.stfalcon.chatkit.sample.features.demo.custom.media.CustomMediaMessagesActivity;
 import com.stfalcon.chatkit.sample.features.demo.def.DefaultDialogsActivity;
 import com.stfalcon.chatkit.sample.features.demo.styled.StyledDialogsActivity;
 import com.stfalcon.chatkit.sample.features.main.adapter.DemoCardFragment;
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case MainActivityPagerAdapter.ID_CUSTOM_VIEW_HOLDER:
                 CustomHolderDialogsActivity.open(this);
-                break;
-            case MainActivityPagerAdapter.ID_CUSTOM_CONTENT:
-                CustomMediaMessagesActivity.open(this);
                 break;
         }
     }
