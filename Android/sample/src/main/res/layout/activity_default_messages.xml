@@ -25,6 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:inputHint="@string/hint_enter_a_message"
-        app:showAttachmentButton="true"/>
+        app:showAttachmentButton="false"/>
 
 </RelativeLayout>
