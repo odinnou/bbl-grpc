@@ -32,6 +32,8 @@ namespace Server.Grpc
             return iMapper.Map<GetMessagesResponse>(entries);
         }
 
+        #region Participate
+
         public override async Task Participate(IAsyncStreamReader<PostMessageRequest> requestStream, IServerStreamWriter<MessageResponse> responseStream, ServerCallContext context)
         {
             if (!await requestStream.MoveNext())
@@ -79,5 +81,7 @@ namespace Server.Grpc
             await iChatEntryRepository.AddEntry(chatEntry);
             await iMessageBroadcaster.BroadcastMessage(chatEntry);
         }
+
+        #endregion
     }
 }

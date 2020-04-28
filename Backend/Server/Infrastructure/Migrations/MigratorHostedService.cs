@@ -46,7 +46,7 @@ namespace Server.Infrastructure.Migrations
                             .RuleFor(entry => entry.Message, fake => fake.Lorem.Sentences(2))
                             .RuleFor(entry => entry.Login, fake => fake.PickRandom(logins));
 
-            return faker.Generate(200);
+            return faker.Generate(2000);
         }
     }
 }
