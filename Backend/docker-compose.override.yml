@@ -14,3 +14,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "47001:81"
+
+  client:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "47002:80"

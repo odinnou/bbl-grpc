@@ -11,3 +11,11 @@ services:
       dockerfile: Server/Dockerfile
     depends_on:
       - sqldata
+
+  client:
+    image: client:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Client/Dockerfile
+    depends_on:
+      - server
