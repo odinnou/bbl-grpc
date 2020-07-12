@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 package Server;
 
 message GetMessagesRequest {
-    int32 lastMessages = 1;
+    int32 last_messages = 1;
 }
 
 message PostMessageRequest {
