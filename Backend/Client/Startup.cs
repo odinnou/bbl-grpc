@@ -6,13 +6,17 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 
+
 namespace Client
 {
     public class Startup
     {
-        public Startup()
+        public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -23,9 +27,6 @@ namespace Client
             services.AddHealthChecks();
             services.AddDependencies();
             services.AddThirdParties();
-
-            // Autorise l'accès à des ressources gRPC en HTTP.
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
         public void Configure(IApplicationBuilder app, IMapper mapper)

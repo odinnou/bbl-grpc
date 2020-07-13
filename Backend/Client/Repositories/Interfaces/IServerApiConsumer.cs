@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Client.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Client.Repositories.Interfaces
 {
-    public class IServerApiConsumer
+    public interface IServerApiConsumer
     {
+        Task<IEnumerable<ChatEntry>> GetHistory(int lastMessages);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Runtime.InteropServices;
 
 namespace Client.Configuration
 {
@@ -8,16 +7,11 @@ namespace Client.Configuration
     {
         public static IServiceCollection AddThirdParties(this IServiceCollection services)
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                AppContext.SetSwitch("System.Net.Http.UseSocketsHttpHandlers", false);
-            }
+            // Autorise l'accès à des ressources gRPC en HTTP.
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
             #region gRPC
-            //services.AddGrpcClient < Server>(o =>
-            //{
-            //    o.Address = new Uri("");
-            //});
+            services.AddGrpcClient<Server.Chat.ChatClient>(client => { client.Address = new Uri("http://server:81"); });
             #endregion
 
             return services;
