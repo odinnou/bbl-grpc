@@ -26,7 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Server\Protos\chat.proto" GrpcServices="Server" />
+    <Protobuf Include="..\Server\Protos\chat.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   
 </Project>
