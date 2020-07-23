@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Client.Repositories;
+using Client.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Client.Configuration
 {
@@ -7,7 +9,7 @@ namespace Client.Configuration
         public static IServiceCollection AddDependencies(this IServiceCollection services)
         {
             #region Repositories
-            //services.AddTransient<IMarketApiConsumer, MarketApiConsumer>();
+            services.AddTransient<IServerApiConsumer, ServerApiConsumer>();
             #endregion
 
             return services;
